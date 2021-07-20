@@ -53,6 +53,20 @@ namespace JumpCloudAssignment.Service
             return ActionMessages.SuccessMessage;
         }
 
+        /// <summary>
+        /// Retrieves the action statistics for each type of action from the action service.
+        /// </summary>
+        /// <returns>Action statistics</returns>
+        public string GetStats()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Verifies that the action info has the correct action type and time
+        /// </summary>
+        /// <param name="actionInfo">ActionInfo to be validated</param>
+        /// <returns>true or false depending on validation results</returns>
         private bool IsValidAction(ActionInfo actionInfo)
         {
             if (!Enum.TryParse(actionInfo.Action, true, out ActionTypes _))
@@ -66,15 +80,6 @@ namespace JumpCloudAssignment.Service
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Retrieves the action statistics for each type of action from the action service.
-        /// </summary>
-        /// <returns>Action statistics</returns>
-        public string GetStats()
-        {
-            throw new NotImplementedException();
         }
     }
 }
