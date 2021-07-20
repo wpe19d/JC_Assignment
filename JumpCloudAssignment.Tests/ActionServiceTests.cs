@@ -102,6 +102,59 @@ namespace JumpCloudAssignment.Tests
             Assert.All(results, result => Assert.Equal(expectedResult, result));
         }
 
+        #endregion
+
+        #region GetStats Tests
+
+        [Fact(DisplayName = "Get Stats Should Return Empty Array For No Actions")]
+        public void GetStatsShouldReturnEmptyArrayForNoActions()
+        {
+            //Arrange
+            var expectedResult = "[]";
+
+            //Act
+            var result = _sut.GetStats();
+
+            //Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory(DisplayName = "Get Stats Should Return Correct Average for Single Action")]
+        [InlineData("{\"action\":\"jump\", \"time\":100}", "[{\"action\":\"jump\",\"avg\":100.0}]")]
+        public void GetStatsShouldReturnCorrectAverageSingleAction(string action, string expectedResult)
+        {
+            //Act
+            var addResult = _sut.AddAction(action);
+            var getResult = _sut.GetStats();
+
+            //Assert
+            Assert.Equal(string.Empty, addResult);
+            Assert.Equal(expectedResult, getResult);
+        }
+
+        [Fact(DisplayName = "Get Stats Should Return Correct Average for Multiple Actions")]
+        public void GetStatsShouldReturnCorrectAverageMultipleActions()
+        {
+            //Arrange
+            var expectedResult = "[{\"action\":\"jump\",\"avg\":150.0},{\"action\":\"run\",\"avg\":100.0}]";
+
+            //Act
+            var addResult1 = _sut.AddAction("{\"action\":\"jump\", \"time\":100}");
+            var addResult2 = _sut.AddAction("{\"action\":\"run\", \"time\":75}");
+            var addResult3 = _sut.AddAction("{\"action\":\"jump\", \"time\":200}");
+            var addResult4 = _sut.AddAction("{\"action\":\"jump\", \"time\":125}");
+
+            var getResult = _sut.GetStats();
+
+            //Assert
+            Assert.Equal(string.Empty, addResult1);
+            Assert.Equal(string.Empty, addResult2);
+            Assert.Equal(string.Empty, addResult3);
+            Assert.Equal(string.Empty, addResult4);
+            Assert.Equal(expectedResult, getResult);
+
+        }        
+
         [Fact(DisplayName = "Add Action and Get Statistics Should Handle Async Requests")]
         public async Task AddActionAndGetStatisticsShouldHandleAsyncRequests()
         {
@@ -159,12 +212,6 @@ namespace JumpCloudAssignment.Tests
 
             Assert.All(results.Last(), result => Assert.NotEqual(string.Empty, result));
         }
-
-        #endregion
-
-        #region GetStats Tests
-
-
         #endregion
     }
 }
