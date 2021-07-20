@@ -44,7 +44,7 @@ namespace JumpCloudAssignment.Tests
         [InlineData("{\"action\":,\"time\":500}")]
         //Invalid Action: Missing Time data
         [InlineData("{\"action\":\"run\",}")]
-        [InlineData("{\"action\":\"run\",\"time\":}")]
+        [InlineData("{\"action\":\"run\",\"time\"}")]
         //Invalid Action: Negative Time 
         [InlineData("{\"action\":\"run\",\"time\":-1}")]
         //Invalid Action: Misspelled Action
@@ -143,7 +143,7 @@ namespace JumpCloudAssignment.Tests
             var addResult1 = _sut.AddAction("{\"action\":\"jump\", \"time\":100}");
             var addResult2 = _sut.AddAction("{\"action\":\"run\", \"time\":75}");
             var addResult3 = _sut.AddAction("{\"action\":\"jump\", \"time\":200}");
-            var addResult4 = _sut.AddAction("{\"action\":\"jump\", \"time\":125}");
+            var addResult4 = _sut.AddAction("{\"action\":\"run\", \"time\":125}");
 
             var getResult = _sut.GetStats();
 
