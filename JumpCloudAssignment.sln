@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JumpCloudAssignment", "JumpCloudAssignment\JumpCloudAssignment.csproj", "{A1D924F3-B3BE-4546-8B56-9EC2B20A2FF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JumpCloudAssignment.Tests", "JumpCloudAssignment.Tests\JumpCloudAssignment.Tests.csproj", "{7E4D8C89-6A67-4DA8-B78B-BE25C04E8ECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JumpCloudAssignment.Tests", "JumpCloudAssignment.Tests\JumpCloudAssignment.Tests.csproj", "{7E4D8C89-6A67-4DA8-B78B-BE25C04E8ECE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
