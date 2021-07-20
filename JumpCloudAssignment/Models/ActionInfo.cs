@@ -8,6 +8,6 @@ namespace JumpCloudAssignment.Models
         public string Action { get; set; }
 
         [JsonRequired]
-        public string Time { get; set; }
+        public int Time { get; set; }
     }
 }
