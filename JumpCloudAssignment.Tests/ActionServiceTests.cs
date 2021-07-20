@@ -166,7 +166,7 @@ namespace JumpCloudAssignment.Tests
             {
                 var addTask = Task.Run(() =>
                 {
-                    var results = new List<string>();
+                    var addResults = new List<string>();
 
                     for (int i = 0; i < 100; i++)
                     {
@@ -178,10 +178,10 @@ namespace JumpCloudAssignment.Tests
 
                         var json = JsonConvert.SerializeObject(actionInfo);
                         var result = _sut.AddAction(json);
-                        results.Add(result);
+                        addResults.Add(result);
                     }
 
-                    return results;
+                    return addResults;
                 });
 
                 tasks[i] = addTask;
@@ -189,15 +189,15 @@ namespace JumpCloudAssignment.Tests
 
             var getTask = Task.Run(() =>
             {
-                var results = new List<string>();
+                var getResults = new List<string>();
                 for (int i = 0; i < 100; i++)
                 {
                     var result = _sut.GetStats();
-                    results.Add(result);
+                    getResults.Add(result);
                     Task.Delay(TimeSpan.FromMilliseconds(100));
                 }
 
-                return results;
+                return getResults;
             });
 
             tasks[tasks.Length - 1] = getTask;
