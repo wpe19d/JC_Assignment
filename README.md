@@ -2,7 +2,6 @@
 This library provides the ability to track the average time for input actions.  Currently, the two type of actions that are supported are "jump" and "run".
 
 ## System Requirements
----
 This library requires the following in order to build and run the library:  
 1. Windows 10
 2. [Visual Studio 2019 Community Edition](https://visualstudio.microsoft.com/downloads/)
@@ -11,7 +10,6 @@ This library requires the following in order to build and run the library:
 5. [Git](https://git-scm.com/downloads) downloaded with an active GitHub account
 
 ## Getting Started
----
 1. Open Command Prompt or Powershell and clone the repo from GitHub using the following command:
 ```
     git clone https://github.com/wpe19d/JC_Assignment.git
@@ -21,20 +19,17 @@ This library requires the following in order to build and run the library:
     cd JC_Assignment
 ```
 ## Building
----
 To build the project, run:
 ```
     .\build.bat
 ```
 
 ## Testing
----
 To test the project, run:
 ```
     .\test.bat
 ```
 ## Usage
----
 There are two action methods contained in this library:
 1. AddAction(string Input) : string
     - Adds an action of type "jump" or "run" and its respective time to the ActionService
@@ -88,7 +83,6 @@ Example usage of the ActionService library
 ```
 
 ## Assumptions
----
 1. Case sensitivity of the inputs and outputs does not matter
 2. GetStats() may return an empty array in the case that no actions have been added.
 3. Time will be within the bounds of an int (-2,147,483,648 to 147,483,648)
