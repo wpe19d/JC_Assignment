@@ -3,8 +3,8 @@
     public static class ActionMessages
     {
         public const string SuccessMessage = "";
-        public const string InvalidAction = "ActionInfo provided is not valid";
-        public const string EmptyAction = "ActionInfo cannot be empty";
+        public const string InvalidAction = "ERROR: ActionInfo provided is not valid";
+        public const string EmptyAction = "ERROR: ActionInfo cannot be empty";
 
         /// <summary>
         /// Returns a formatted invalid action message with the action input.
