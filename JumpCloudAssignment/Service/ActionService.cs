@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using JumpCloudAssignment.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace JumpCloudAssignment.Service
 {
@@ -10,7 +12,8 @@ namespace JumpCloudAssignment.Service
     {
         private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
         {
-            MissingMemberHandling = MissingMemberHandling.Error
+            MissingMemberHandling = MissingMemberHandling.Error,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
         private ConcurrentDictionary<string, int[]> actionDictionary = new ConcurrentDictionary<string, int[]>();
@@ -32,13 +35,11 @@ namespace JumpCloudAssignment.Service
                     throw new Exception(ActionMessages.EmptyAction);
                 }
 
-                //Converts the input into an ActionInfo Model.
-                actionInfo = JsonConvert.DeserializeObject<ActionInfo>(input, _settings);
-
-                if (!IsValidAction(actionInfo))
+                if (!IsValidAction(input, out actionInfo))
                 {
-                    throw new Exception(ActionMessages.InvalidAction);
+                    throw new Exception(ActionMessages.InvalidActionMessage(input));
                 }
+
             }
             catch(Exception e)
             {
@@ -59,7 +60,23 @@ namespace JumpCloudAssignment.Service
         /// <returns>Action statistics</returns>
         public string GetStats()
         {
-            throw new NotImplementedException();
+            var actionStats = new List<ActionStatistics>();
+
+            //Loops through all entries in the dictionary
+            foreach (var key in actionDictionary.Keys.OrderBy(x => x))
+            {
+                //Attempts to retrieve the value for the key
+                if (actionDictionary.TryGetValue(key, out var value))
+                {
+                    var actionStat = new ActionStatistics()
+                    {
+                        Action = key,
+                        Avg = (double)value.Sum() / value.Length
+                    };
+                    actionStats.Add(actionStat);
+                }
+            }
+            return JsonConvert.SerializeObject(actionStats, _settings);
         }
 
         /// <summary>
@@ -67,19 +84,29 @@ namespace JumpCloudAssignment.Service
         /// </summary>
         /// <param name="actionInfo">ActionInfo to be validated</param>
         /// <returns>true or false depending on validation results</returns>
-        private bool IsValidAction(ActionInfo actionInfo)
+        private bool IsValidAction(string action, out ActionInfo actionInfo)
         {
-            if (!Enum.TryParse(actionInfo.Action, true, out ActionTypes _))
+            actionInfo = null;
+            try
+            {
+
+                actionInfo = JsonConvert.DeserializeObject<ActionInfo>(action, _settings);
+                if (!Enum.TryParse(actionInfo.Action, true, out ActionTypes _))
+                {
+                    return false;
+                }
+
+                if (actionInfo.Time < 0)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch
             {
                 return false;
             }
-
-            if (actionInfo.Time < 0)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }
