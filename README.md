@@ -7,7 +7,7 @@ This library requires the following in order to build and run the library:
 2. [Visual Studio 2019 Community Edition](https://visualstudio.microsoft.com/downloads/)
 3. [.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1)
 4. Command Prompt or Powershell
-5. [Git](https://git-scm.com/downloads) downloaded with an active GitHub account
+5. [Git](https://git-scm.com/downloads) downloaded
 
 ## Getting Started
 1. Open Command Prompt or Powershell and clone the repo from GitHub using the following command:
@@ -30,30 +30,31 @@ To test the project, run:
     .\test.bat
 ```
 ## Usage
-There are two action methods contained in this library:
+There are two action methods contained in this library via the Action Service:
 1. AddAction(string Input) : string
     - Adds an action of type "jump" or "run" and its respective time to the ActionService
         - Example Input: Json string of action information
-        ```json
-            {"action":"run","time":500}
-        ```
-        - Example Output: Empty string if successfull.  Error Message if Invalid.
+          ```json
+              {"action":"run","time":500}
+          ```
+        - Example Output: If the action is added successfully, an empty string will be returned.  If there is an issue with adding the action, an error message will be returned.
 2. GetStats() : string
-    - Example Output: json array of action types and their average times
-        ```json
-            [
-                  {
-                    "action": "jump",
-                    "avg": 100
-                  },
-                  {
-                    "action": "run",
-                    "avg": 375
-                  }
-                ]
-        ```
+    - Retreives the average time statistic for each action type
+      - Example Output: json array of action types and their average times
+          ```json
+              [
+                    {
+                      "action": "jump",
+                      "avg": 100
+                    },
+                    {
+                      "action": "run",
+                      "avg": 375
+                    }
+                  ]
+          ```
 
-Example usage of the ActionService library
+## Example
 ```csharp
     ActionService actionService = new ActionService();
 
@@ -85,4 +86,5 @@ Example usage of the ActionService library
 ## Assumptions
 1. Case sensitivity of the inputs and outputs does not matter
 2. GetStats() may return an empty array in the case that no actions have been added.
-3. Time will be within the bounds of an int (-2,147,483,648 to 147,483,648)
+3. Time will not be negative.
+4. Time will be within the bounds of an int (maximum of 2,147,483,648)
