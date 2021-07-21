@@ -12,22 +12,22 @@ This library requires the following in order to build and run the library:
 ## Getting Started
 1. Open Command Prompt or Powershell and clone the repo from GitHub using the following command:
 ```
-    git clone https://github.com/wpe19d/JC_Assignment.git
+git clone https://github.com/wpe19d/JC_Assignment.git
 ```
 2. Navigate to the project directory
 ```
-    cd JC_Assignment
+cd JC_Assignment
 ```
 ## Building
 To build the project, run:
 ```
-    .\build.bat
+.\build.bat
 ```
 
 ## Testing
 To test the project, run:
 ```
-    .\test.bat
+.\test.bat
 ```
 ## Usage
 There are two action methods contained in this library via the Action Service:
@@ -35,52 +35,52 @@ There are two action methods contained in this library via the Action Service:
     - Adds an action of type "jump" or "run" and its respective time to the ActionService
         - Example Input: Json string of action information
           ```json
-              {"action":"run","time":500}
+          {"action":"run","time":500}
           ```
         - Example Output: If the action is added successfully, an empty string will be returned.  If there is an issue with adding the action, an error message will be returned.
 2. GetStats() : string
     - Retreives the average time statistic for each action type
       - Example Output: json array of action types and their average times
           ```json
-              [
-                    {
-                      "action": "jump",
-                      "avg": 100
-                    },
-                    {
-                      "action": "run",
-                      "avg": 375
-                    }
-                  ]
+          [
+            {
+              "action": "jump",
+              "avg": 100
+            },
+            {
+              "action": "run",
+              "avg": 375
+            }
+          ]
           ```
 
 ## Example
 ```csharp
-    ActionService actionService = new ActionService();
+ActionService actionService = new ActionService();
 
-            var actionOne = "{\"action\":\"run\",\"time\":500}";
-            var actionTwo = "{\"action\":\"jump\",\"time\":100}";
-            var actionThree = "{\"action\":\"run\",\"time\":250}";
+      var actionOne = "{\"action\":\"run\",\"time\":500}";
+      var actionTwo = "{\"action\":\"jump\",\"time\":100}";
+      var actionThree = "{\"action\":\"run\",\"time\":250}";
 
-            actionService.AddAction(actionOne);
-            actionService.AddAction(actionTwo);
-            actionService.AddAction(actionThree);
+      actionService.AddAction(actionOne);
+      actionService.AddAction(actionTwo);
+      actionService.AddAction(actionThree);
 
-            var stats = actionService.GetStats();
+      var stats = actionService.GetStats();
 
-            /*
-                Output of the stats variable: 
-                [
-                  {
-                    "action": "jump",
-                    "avg": 100
-                  },
-                  {
-                    "action": "run",
-                    "avg": 375
-                  }
-                ]
-             */
+      /*
+          Output of the stats variable: 
+          [
+            {
+              "action": "jump",
+              "avg": 100
+            },
+            {
+              "action": "run",
+              "avg": 375
+            }
+          ]
+        */
 ```
 
 ## Assumptions

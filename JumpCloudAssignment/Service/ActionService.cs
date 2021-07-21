@@ -27,28 +27,20 @@ namespace JumpCloudAssignment.Service
         {
             ActionInfo actionInfo;
 
-            try
+            //Verify the input has content
+            if (string.IsNullOrEmpty(input))
             {
-                //Verify the input has content
-                if (string.IsNullOrEmpty(input))
-                {
-                    throw new Exception(ActionMessages.EmptyAction);
-                }
-
-                if (!IsValidAction(input, out actionInfo))
-                {
-                    throw new Exception(ActionMessages.InvalidActionMessage(input));
-                }
-
+                return ActionMessages.EmptyAction;
             }
-            catch(Exception e)
-            {
-                return e.Message;
+
+            if (!IsValidAction(input, out actionInfo))
+            { 
+                return ActionMessages.InvalidActionMessage(input);
             }
 
             //Attempts to add to the action dictionary.
             //If the key (action type) already exists, it appends the action's time to the end of the array for that action
-            _ = actionDictionary.AddOrUpdate(actionInfo.Action, new[] {actionInfo.Time},
+            actionDictionary.AddOrUpdate(actionInfo.Action, new[] {actionInfo.Time},
                 (key, value) => value.Append(actionInfo.Time).ToArray());
 
             return ActionMessages.SuccessMessage;
@@ -89,8 +81,8 @@ namespace JumpCloudAssignment.Service
             actionInfo = null;
             try
             {
-
                 actionInfo = JsonConvert.DeserializeObject<ActionInfo>(action, _settings);
+
                 if (!Enum.TryParse(actionInfo.Action, true, out ActionTypes _))
                 {
                     return false;
@@ -100,13 +92,13 @@ namespace JumpCloudAssignment.Service
                 {
                     return false;
                 }
-
-                return true;
             }
             catch
             {
                 return false;
             }
+
+            return true;
         }
     }
 }
