@@ -47,14 +47,14 @@ namespace JumpCloudAssignment.Service
         }
 
         /// <summary>
-        /// Retrieves the action statistics for each type of action from the action service.
+        /// Retrieves the action statistics for each type of action.
         /// </summary>
         /// <returns>Action statistics</returns>
         public string GetStats()
         {
             var actionStats = new List<ActionStatistics>();
 
-            //Loops through all entries in the dictionary
+            //Loops through all entries in the concurrent dictionary
             foreach (var key in actionDictionary.Keys.OrderBy(x => x))
             {
                 //Attempts to retrieve the value for the key
@@ -65,6 +65,7 @@ namespace JumpCloudAssignment.Service
                         Action = key,
                         Avg = value.Average()
                     };
+
                     actionStats.Add(actionStat);
                 }
             }
@@ -72,7 +73,8 @@ namespace JumpCloudAssignment.Service
         }
 
         /// <summary>
-        /// Verifies that the action info has the correct action type and time
+        /// Verifies that the action info can be deserialized, that it has the correct action type,
+        /// and that it has the correct time
         /// </summary>
         /// <param name="actionInfo">ActionInfo to be validated</param>
         /// <returns>true or false depending on validation results</returns>
@@ -83,6 +85,7 @@ namespace JumpCloudAssignment.Service
             {
                 actionInfo = JsonConvert.DeserializeObject<ActionInfo>(action, _settings);
 
+                //If the action is not one of the Action Types (jump or run), return false for invalid.
                 if (!Enum.TryParse(actionInfo.Action, true, out ActionTypes _))
                 {
                     return false;
