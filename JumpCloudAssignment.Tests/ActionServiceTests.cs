@@ -168,12 +168,12 @@ namespace JumpCloudAssignment.Tests
                 {
                     var addResults = new List<string>();
 
-                    for (int i = 0; i < 100; i++)
+                    for (int y = 0; y < 100; y++)
                     {
                         var actionInfo = new ActionInfo
                         {
-                            Action = (i % 2 == 0) ? "jump" : "run",
-                            Time = i
+                            Action = (y % 2 == 0) ? "jump" : "run",
+                            Time = y
                         };
 
                         var json = JsonConvert.SerializeObject(actionInfo);
@@ -212,6 +212,34 @@ namespace JumpCloudAssignment.Tests
             }
 
             Assert.All(results.Last(), result => Assert.NotEqual(string.Empty, result));
+        }
+
+        [Theory(DisplayName = "Add Action and Get Statistics Async Should Produce Accurate Results")]
+        [InlineData(500, "[{\"action\":\"jump\",\"avg\":249.5}]")]
+        [InlineData(100, "[{\"action\":\"jump\",\"avg\":49.5}]")]
+        [InlineData(10, "[{\"action\":\"jump\",\"avg\":4.5}]")]
+        [InlineData(10000, "[{\"action\":\"jump\",\"avg\":4999.5}]")]
+        public void AddActionAndGetStatsAsyncShouldProduceAccurateResults(int iterations, string expectedResult)
+        {
+
+            //Act
+            Parallel.For(0, iterations, index =>
+            {
+                ActionInfo actionInfo;
+
+                actionInfo = new ActionInfo()
+                {
+                    Action = "jump",
+                    Time = index
+                };
+                var json = JsonConvert.SerializeObject(actionInfo);
+                var response = _sut.AddAction(json);
+            });
+
+            var results = _sut.GetStats();
+
+            //Assert
+            Assert.Equal(expectedResult, results);
         }
         #endregion
     }
