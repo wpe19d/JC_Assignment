@@ -20,9 +20,9 @@ The library requires the following in order to build and run the library:
     ```
 ## Building
 To build the project, run:
-    ```
-    .\build.bat
-    ```
+```
+.\build.bat
+```
 
 ## Testing
 To test the project, run:
@@ -90,3 +90,4 @@ ActionService actionService = new ActionService();
 3. GetStats() may return an empty array in the case that no actions have been added.
 4. Time will not be negative.
 5. Time will be within the bounds of an int (maximum of 2,147,483,648)
+6. AddAction() should not return any message if an action is added successfully.
