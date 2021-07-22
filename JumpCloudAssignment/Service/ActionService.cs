@@ -63,7 +63,7 @@ namespace JumpCloudAssignment.Service
                     var actionStat = new ActionStatistics()
                     {
                         Action = key,
-                        Avg = (double)value.Sum() / value.Length
+                        Avg = value.Average()
                     };
                     actionStats.Add(actionStat);
                 }
